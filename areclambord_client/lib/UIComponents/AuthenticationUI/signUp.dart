@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import '../../Models/aReclambordUser.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key key}) : super(key: key);
@@ -23,6 +28,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
   ];
   final _signUpScaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
+  Future<HttpResponse> _registerUser;
+  
+  createUser() async {
+    AReclamborUser newUser = AReclamborUser(email: regUserName.controller.text, password: regPassword.controller.text);
+    var url = Uri.parse('http://192.168.8.101:8000/api/user/signup/');    
+    var response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": "MkP8RQv5BC7is6CH30GWETDANRQ9HvXUhsOTLsJB06aIds9DGX6upVcD8zivcuWH"
+      },
+      body: jsonEncode(newUser.toMap())
+    );
+
+    if (response.statusCode == 201) {
+      _signUpScaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text("Woow!!Created"),
+        backgroundColor: Colors.teal[900]
+        ));
+    }
+  }
 
   signUpButton() {
     return SizedBox(
@@ -45,6 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         onPressed: (){
           if (_formKey.currentState.validate()) {
             //addMall();
+            createUser();
           }               
         }
       ),
@@ -57,12 +84,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       decoration: InputDecoration(
         labelText: "First Name", hintText: "Enter first name"
       ),
-      validator: (value){
-        if (value.isEmpty){
-          return 'First name cannot be empty';
-        }
-        return null;          
-      },
+      // validator: (value){
+      //   if (value.isEmpty){
+      //     return 'First name cannot be empty';
+      //   }
+      //   return null;          
+      // },
     );
 
     final regLastName = TextFormField(
@@ -70,12 +97,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       decoration: InputDecoration(
         labelText: "Last Name", hintText: "Enter last name"
       ),
-      validator: (value){
-        if (value.isEmpty){
-          return 'Last name cannot be empty';
-        }
-        return null;          
-      },
+      // validator: (value){
+      //   if (value.isEmpty){
+      //     return 'Last name cannot be empty';
+      //   }
+      //   return null;          
+      // },
     );
 
     final regUserName = TextFormField(
@@ -183,6 +210,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: <Widget>[                    
                     regFirstName,
                     regLastName,
+                    regUserName,
                     regPassword,
                     regConfirmPassword,
                     Row(
