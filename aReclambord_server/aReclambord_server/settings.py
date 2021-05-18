@@ -25,7 +25,7 @@ SECRET_KEY = 'db5(vx50r8%4&x(li8p2=@9ml=0e++tkyh+jg-hi=(=$0jyo0j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
