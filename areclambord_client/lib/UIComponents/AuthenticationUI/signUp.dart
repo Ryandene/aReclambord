@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../Models/aReclambordUser.dart';
 import 'package:http/http.dart' as http;
+import '../../Commons/constants.dart';
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key key}) : super(key: key);
@@ -32,12 +33,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   
   createUser() async {
     AReclamborUser newUser = AReclamborUser(email: regUserName.controller.text, password: regPassword.controller.text);
-    var url = Uri.parse('http://192.168.8.101:8000/api/user/signup/');    
+    var url = Uri.parse(aReclamboardApiUrl + 'api/user/signup/');  
+    var body = jsonEncode(newUser.toMap());
+    print(body);  
     var response = await http.post(
       url,
       headers: {
         "Content-Type": "application/json",
-        "X-CSRFToken": "MkP8RQv5BC7is6CH30GWETDANRQ9HvXUhsOTLsJB06aIds9DGX6upVcD8zivcuWH"
+        "X-CSRFToken": x_csrfToken
       },
       body: jsonEncode(newUser.toMap())
     );
