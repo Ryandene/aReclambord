@@ -1,5 +1,9 @@
+import 'package:areclambord_client/UIComponents/VendorUI/dashboardVendor.dart';
 import 'package:flutter/material.dart';
 import 'signUp.dart';
+import 'package:http/http.dart' as http;
+import '../../Commons/constants.dart';
+
 //steppers
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -43,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     );
 
-  addMallButton() {
+  signInButton() {
     return SizedBox(
       width: double.infinity,
       child: MaterialButton(
@@ -62,13 +66,25 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         onPressed: (){
-          if (_formKey.currentState.validate()) {
-            //addMall();
-          }               
+          // if (_formKey.currentState.validate()) {
+          //   //addMall();
+            
+          // }
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DashboardVendorScreen()),
+          );                
         }
       ),
     );
   }
+
+  // Future<int> aReclambordSignIn(String username, String password){
+  //   var url = Uri.parse(aReclamboardApiUrl + 'api/user/signIn')
+  //   var response = await http.post(
+
+  //   );
+  // }
 
   signUpScreenButton() {
     return SizedBox(
@@ -98,15 +114,56 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  void _manageMallDialog(BuildContext context, String title) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          backgroundColor: Colors.grey[300],
+          elevation: 200,
+          titleTextStyle: TextStyle(
+            fontSize: 20.0,
+            fontStyle: FontStyle.normal,
+            color: Colors.indigo[600]
+          ),
+          title: Text(title),
+          // content: new Text(
+          //   "You may edit or delete this shopping mall.",
+          //   style: TextStyle(
+          //     fontSize: 15.0
+          //   ),
+          // ),
+          actions: <Widget>[
+            new ElevatedButton(
+              child: new Text(
+                "OK",
+                style: TextStyle(
+                  color: Colors.white
+                ),
+              ),
+              onPressed: () {
+                // Navigator.push(
+                // context,
+                // MaterialPageRoute(builder: (context) => AdminEditMall(mall: mall)),
+                // );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _loginScaffoldKey,
-      appBar: AppBar(
-        elevation: 0,
-        brightness: Brightness.light,        
-        backgroundColor: Colors.white,
-      ),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   brightness: Brightness.light,        
+      //   backgroundColor: Colors.white,
+      // ),
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[ 
@@ -165,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: 15.0,
                     ),
-                    addMallButton(),
+                    signInButton(),
                     SizedBox(
                       height: 30.0,
                     ),

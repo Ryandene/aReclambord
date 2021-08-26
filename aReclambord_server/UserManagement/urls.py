@@ -6,6 +6,7 @@ from . import views
     # path('', BookListView.as_view()),
     # path('<pk>', BookDetailView.as_view())
 
+
 urlpatterns = [
     path('signup/', views.signup_user)
 ]

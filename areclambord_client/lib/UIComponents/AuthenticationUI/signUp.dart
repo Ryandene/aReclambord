@@ -151,11 +151,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _signUpScaffoldKey,
-      appBar: AppBar(
-        elevation: 0,
-        brightness: Brightness.light,        
-        backgroundColor: Colors.white,
-      ),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   brightness: Brightness.light,        
+      //   backgroundColor: Colors.white,
+      // ),
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[ 
